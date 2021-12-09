@@ -1,0 +1,29 @@
+version: "3"
+services:
+  mojo:
+    image: ubuntu:latest
+    container_name: mojocom_main
+    user: root
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mojocom_db
+    environment:
+      MOJO_ENV: development
+      DATABASE_URL: mysql://mojocom:mojocom@db:3306/mojocom_development
+  mojocom_db:
+    image: mysql:latest
+    container_name: mojocom_mysql
+    volumes:
+      - "./.mysql-data/db:/var/lib/mysql"
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: mojocom_development
+      MYSQL_USER: mojocom
+      MYSQL_PASSWORD: mojocom
+      MYSQL_ROOT_PASSWORD: root
+
+volumes:
+  db_data:
