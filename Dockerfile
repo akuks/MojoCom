@@ -18,7 +18,9 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
 # Setting up the Mojolicious
 # Install Mojolicious
 RUN curl -L https://cpanmin.us | perl - -M https://cpan.metacpan.org -n Mojolicious
+RUN curl -L https://cpanmin.us | perl -  App::cpanminus && cpanm Carton
 
 RUN mkdir $APP_HOME
 
+# Copy the file to Application Home
 COPY ./ "${APP_HOME}"
