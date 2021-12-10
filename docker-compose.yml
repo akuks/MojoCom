@@ -1,8 +1,8 @@
-version: "3"
+version: "3.9"
 services:
-  mojo:
-    image: ubuntu:latest
-    container_name: mojocom_main
+  web:
+    build: .
+    container_name: mojocom_server
     user: root
     ports:
       - "3000:3000"
@@ -11,6 +11,9 @@ services:
     environment:
       MOJO_ENV: development
       DATABASE_URL: mysql://mojocom:mojocom@db:3306/mojocom_development
+    entrypoint: ["bash", "-c", "/opt/MojoCom/script/entrypoint.sh" ]
+    command: ["bash", "-c", "/usr/local/bin/morbo /opt/MojoCom/script/mojo_com" ]
+
   mojocom_db:
     image: mysql:latest
     container_name: mojocom_mysql
