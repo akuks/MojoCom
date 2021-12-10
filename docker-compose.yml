@@ -6,13 +6,14 @@ services:
     user: root
     ports:
       - "3000:3000"
+      - "3001:3001"
+      - "5000:5000"
     depends_on:
       - mojocom_db
     environment:
       MOJO_ENV: development
       DATABASE_URL: mysql://mojocom:mojocom@db:3306/mojocom_development
-    entrypoint: ["bash", "-c", "/opt/MojoCom/script/entrypoint.sh" ]
-    command: ["bash", "-c", "/usr/local/bin/morbo /opt/MojoCom/script/mojo_com" ]
+    entrypoint: "/opt/MojoCom/script/entrypoint.sh"
 
   mojocom_db:
     image: mysql:latest
