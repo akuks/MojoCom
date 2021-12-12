@@ -19,7 +19,10 @@ cd $FE_APP
 echo "Starting the Application"
 yarn install
 
-yarn start &
+yarn dev &
+
+ls -lhrt
+pwd
 
 # Start the Backend Application
 $MORBO $APP_BIN
