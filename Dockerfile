@@ -4,6 +4,7 @@ FROM ubuntu:latest
 ENV APP_HOME=/opt/MojoCom
 
 RUN apt update && apt install curl -y && apt install build-essential -y
+RUN apt install nano -y
 
 # Install the Node
 RUN curl -sL https://deb.nodesource.com/setup_16.x -o nodesource_setup.sh && bash nodesource_setup.sh && \
@@ -24,3 +25,5 @@ RUN mkdir $APP_HOME
 
 # Copy the file to Application Home
 COPY ./ "${APP_HOME}"
+
+WORKDIR "${APP_HOME}"
