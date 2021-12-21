@@ -1,0 +1,15 @@
+requires 'Mojolicious';
+requires 'DBIx::Class';
+requires 'Cache::Memcached';
+requires 'Mojolicious::Plugin::Authentication';
+requires 'Mojolicious::Plugin::Bcrypt';
+requires 'Mojolicious::Plugin::OpenAPI';
+requires 'Mojo::JWT';
+requires 'JSON';
+requires 'DBIx::Class::TimeStamp';
+requires 'DBIx::Class::EncodedColumn';
+requires 'DBIx::Class::Migration';
+requires 'DBIx::Class::TimeStamp';
+requires 'Mojolicious::Plugin::AssetPack';
+requires 'Email::Valid';
+requires 'Trim';
