@@ -7,12 +7,14 @@ sub startup ($self) {
   # Load configuration from config file
   my $config = $self->plugin('NotYAMLConfig');
 
+  $self->plugin( 'AutoReload' );
+
   # Configure the application
   $self->secrets($config->{secrets});
 
   $self->plugin("OpenAPI" => {
-      url => $self->home->rel_file("api.yaml"), schema => "v3"}
-  );
+      url => $self->home->rel_file("api.yaml"), schema => "v3"
+  });
 
 }
 
