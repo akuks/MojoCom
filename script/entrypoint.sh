@@ -2,28 +2,37 @@
 
 set -e
 
-echo "Setting up"
+# Start MySQL
+echo "Starting MySQL Service"
+/etc/init.d/mysql start
+echo "MySQL started"
+
+# Start Postgresql
+echo "Starting Postgresql"
+/etc/init.d/postgresql start
+echo "Postgresql started"
+
+echo "Setting up the application"
 
 ## SETUP
-MORBO="/usr/local/bin/morbo"
-APP_BIN="/opt/MojoCom/script/mojo_com"
-FE_APP="/opt/MojoCom/app/"
+PERL_PATH="/usr/"
+PERL_BINARY="$PERL_PATH/bin/perl"
 
-## Change Directory
-echo "Change the directory"
-cd $FE_APP
-#
-#which yarn
+BASE_DIR="/opt/MojoCom/"
+LIB_PATH="$BASE_DIR/local/lib/perl5/"
 
-## Start the Frontend
-echo "Starting the Application"
-yarn install
+MORBO_BINARY="$BASE_DIR/local/bin/morbo"
 
-#yarn dev &
+APP_BIN="$BASE_DIR/script/mojo_com"
 
-ls -lhrt
-pwd
+TEMPLATE="$BASE_DIR/templates/"
 
-# Start the Backend Application
-$MORBO $APP_BIN
-#/usr/local/bin/morbo /opt/MojoCom/script/mojo_com
+
+echo "Export Perl Library Path"
+export PERL5LIB=$LIB_PATH
+
+# shellcheck disable=SC2028
+echo "Starting the application\n"
+
+carton exec $PERL_BINARY -I $LIB_PATH $MORBO_BINARY $APP_BIN -l http://*:3000
+
