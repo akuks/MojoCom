@@ -1,3 +1,7 @@
 mojo_com_prod.yml
 .mysql-data
 .idea
+local/
+app/
+.perl-version
+cpanfile.snapshot
