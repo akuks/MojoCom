@@ -27,9 +27,12 @@ paths:
           required: true
           schema:
             type: string
-      x-mojo-to:
-        controller: 'Auth::Login'
-        action: login
+      x-mojo-to: 'Auth::Login#login'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
       responses:
         400:
           description: Incorrect username or password
