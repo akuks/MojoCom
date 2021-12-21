@@ -3,13 +3,14 @@ use Mojo::Base 'Mojolicious::Controller', -signatures;
 
 use strict;
 use warnings;
+use JSON;
 
 sub login( $c ) {
     $c->openapi->valid_input or return;
 
-    print Data::Dumper::Dumper( $c->req->json );
+    my $output = { message => 'Login Successful' } ;
 
-    $c->render( openapi => $c->req->json )
+    return $c->render( json => $output )
 }
 
 1;
