@@ -13,3 +13,4 @@ requires 'DBIx::Class::TimeStamp';
 requires 'Mojolicious::Plugin::AssetPack';
 requires 'Email::Valid';
 requires 'Trim';
+requires 'YAML::XS'

@@ -6,3 +6,4 @@ app/
 .perl-version
 cpanfile.snapshot
 templates/example
+app/node_modules/

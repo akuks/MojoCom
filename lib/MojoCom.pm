@@ -10,11 +10,10 @@ sub startup ($self) {
   # Configure the application
   $self->secrets($config->{secrets});
 
-  # Router
-  my $r = $self->routes;
+  $self->plugin("OpenAPI" => {
+      url => $self->home->rel_file("api.yaml"), schema => "v3"}
+  );
 
-  # Normal route to controller
-  $r->get('/')->to('Example#welcome');
 }
 
 1;
