@@ -1,0 +1,47 @@
+openapi: 3.0.3
+info:
+  title: MojoCom - A Community builder in Perl
+  description: 'This is a community builder in Perl'
+  termsOfService: http://localhost:5000/terms/
+  contact:
+    email: kukreti.ashutosh@gmail.com
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000/
+paths:
+  /user/login:
+    post:
+      description: Login API
+      summary: MojoCom Login API
+      operationId: userLogin
+      parameters:
+        - name: username
+          in: query
+          description: The username for login
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: The password for login
+          required: true
+          schema:
+            type: string
+      x-mojo-to:
+        controller: 'Auth::Login'
+        action: login
+      responses:
+        400:
+          description: Incorrect username or password
+          content: {}
+        200:
+          description: Login success or failure
+          content:
+            application/json:
+              schema:
+                type: string
+components:
+  schemas:
+    User:
+      type: object
+  
