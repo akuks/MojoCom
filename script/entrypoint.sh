@@ -19,7 +19,7 @@ cd $FE_APP
 echo "Starting the Application"
 yarn install
 
-yarn dev &
+#yarn dev &
 
 ls -lhrt
 pwd
