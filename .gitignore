@@ -5,3 +5,4 @@ local/
 app/
 .perl-version
 cpanfile.snapshot
+templates/example
