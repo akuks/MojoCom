@@ -6,6 +6,7 @@ requires 'Mojolicious::Plugin::Bcrypt';
 requires 'Mojolicious::Plugin::OpenAPI';
 requires 'Mojo::JWT';
 requires 'JSON';
+requires 'Mojo::JSON';
 requires 'DBIx::Class::TimeStamp';
 requires 'DBIx::Class::EncodedColumn';
 requires 'DBIx::Class::Migration';
