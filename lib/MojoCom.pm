@@ -16,6 +16,15 @@ sub startup ($self) {
       url => $self->home->rel_file("api.yaml"), schema => "v3"
   });
 
+  $self->plugin(
+      OpenAPI => {
+          renderer => sub {
+            my ($c, $data) = @_;
+            return Mojo::JSON::encode_json($data);
+          }
+      }
+  );
+
 }
 
 1;
