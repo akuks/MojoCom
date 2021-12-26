@@ -16,3 +16,6 @@ requires 'Email::Valid';
 requires 'Trim';
 requires 'YAML::XS';
 requires 'Mojolicious::Plugin::AutoReload';
+requires 'JSON::Validator';
+requires 'Config::General';
+requires 'DBD::Pg';
