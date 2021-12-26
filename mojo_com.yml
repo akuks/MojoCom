@@ -1,3 +1,19 @@
 ---
 secrets:
   - 9f5ad6cc8829661b224958be6b15ddc5fec10abd
+database:
+  schema: 'MojoCom::Schema'
+  production:
+    db_name: mojocom
+    username: ashutosh
+    password: ''
+    host: localhost
+    port: 5432
+    dsn: 'dbi:Pg:dbname=mojocom;host=localhost;port=5432'
+  development:
+    db_name: mojocom
+    username: ashutosh
+    password: ''
+    host: localhost
+    port: 5432
+    dsn: 'dbi:Pg:dbname=mojocom;host=localhost;port=5432'
