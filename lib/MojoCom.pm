@@ -1,5 +1,6 @@
 package MojoCom;
 use Mojo::Base 'Mojolicious', -signatures;
+use MojoCom::Plugin::DB;
 
 # This method will run once at server start
 sub startup ($self) {
@@ -16,15 +17,21 @@ sub startup ($self) {
       url => $self->home->rel_file("api.yaml"), schema => "v3"
   });
 
-  $self->plugin(
-      OpenAPI => {
-          renderer => sub {
-            my ($c, $data) = @_;
-            return Mojo::JSON::encode_json($data);
-          }
-      }
-  );
+  $self->helper( dbh => $self->plugin('MojoCom::Plugin::DB') );
 
+  # $self->plugin(
+  #     OpenAPI => {
+  #         renderer => sub {
+  #           my ($c, $data) = @_;
+  #           return ($data);
+  #         }
+  #     }
+  # );
+
+}
+
+sub return_response ( $self, $c, $output ) {
+    $c->render( openapi => json => $output )
 }
 
 1;
