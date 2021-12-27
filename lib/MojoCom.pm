@@ -19,6 +19,20 @@ sub startup ($self) {
 
     $self->helper( dbh => $self->plugin('MojoCom::Plugin::DB') );
 
+    # Register Plugin
+    $self->plugin('MojoCom::Plugin::Validation');
+
+    # Check if the form has been submitted from the browser
+    # If not then return the request
+    $self->hook(
+        before_dispatch => sub ( $c ) {
+            my $browser = $c->req->headers->user_agent;
+            if ( $browser =~ m/Postman|Curl/i and $self->mode ne 'development' ) {
+                return $c->render( json => { message => 'You have successfully submitted the data' } )
+            }
+        }
+    );
+
     # Workaround
     $self->hook(
         after_dispatch => sub ( $c ) {
