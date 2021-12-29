@@ -42,7 +42,9 @@ __PACKAGE__->table("users");
 =head2 user_id
 
   data_type: 'integer'
+  is_auto_increment: 1
   is_nullable: 0
+  sequence: 'categories_id_seq'
 
 =head2 email
 
@@ -109,7 +111,12 @@ __PACKAGE__->table("users");
 
 __PACKAGE__->add_columns(
   "user_id",
-  { data_type => "integer", is_nullable => 0 },
+  {
+    data_type         => "integer",
+    is_auto_increment => 1,
+    is_nullable       => 0,
+    sequence          => "categories_id_seq",
+  },
   "email",
   { data_type => "varchar", is_nullable => 0, size => 255 },
   "password",
@@ -173,8 +180,8 @@ __PACKAGE__->add_unique_constraint("users_email", ["email"]);
 __PACKAGE__->add_unique_constraint("users_user_key", ["user_key"]);
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-12-29 11:45:32
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:PP2/u/8HPYfZoSTXWbHDPg
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-12-29 19:02:02
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:oTPL0Kh/cTtUx3W/HsfWdQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
