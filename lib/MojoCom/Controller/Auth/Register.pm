@@ -20,12 +20,26 @@ sub register ( $c ) {
         }
     }
 
-    print Data::Dumper::Dumper( $c->req->headers->user_agent );
     return $c->render ( openapi => { error => 'Invalid form parameters are passed.' } ) if ( $v->has_error ) ;
 
+    if ( $c->app->dbh->resultset( 'User' )->is_user_exist( $c->param( 'username' ) ) ) {
+        $output = { message => 'User registered successfully' };
+        return $c->render( openapi => { error => 'User already exists.' } )
+    }
 
-    $output = { message => 'User registered successfully' };
+    my %options = (
+        email    => $c->param( 'username' ),
+        password => $c->bcrypt( 'password' )
+    );
 
+    my $user = $c->app->dbh->resultset( 'User' )->create_update_user( \%options );
+
+    if ( $user ) {
+        $output = { message => 'User registered successfully' };
+    }
+    else {
+        $output = { error => 'Failed to create user. Please contact support.' };
+    }
 
     return $c->render( openapi => $output );
 }

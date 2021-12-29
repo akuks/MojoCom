@@ -1,6 +1,5 @@
 package MojoCom;
 use Mojo::Base 'Mojolicious', -signatures;
-use MojoCom::Plugin::DB;
 
 # This method will run once at server start
 sub startup ($self) {
@@ -9,6 +8,7 @@ sub startup ($self) {
     my $config = $self->plugin('NotYAMLConfig');
 
     $self->plugin( 'AutoReload' );
+    $self->plugin('Bcrypt');
 
     # Configure the application
     $self->secrets($config->{secrets});
