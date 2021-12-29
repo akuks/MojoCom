@@ -12,13 +12,17 @@ sub register ( $self, $app, $conf ) {
     my $config = $app->plugin('NotYAMLConfig');
     my $db_config = $config->{ database }->{ $app->mode };
 
-    my $dbh = $config->{ database }->{ schema }->connect(
-        $db_config->{ dsn },
-        $db_config->{ username },
-        $db_config->{ password }
-    );
+    $app->helper( connect => sub ( $c ) {
+        my $dbh = $config->{ database }->{ schema }->connect(
+            $db_config->{ dsn },
+            $db_config->{ username },
+            $db_config->{ password }
+        );
 
-    return $dbh;
+        return $dbh;
+    });
+
+    return
 }
 
 1;
