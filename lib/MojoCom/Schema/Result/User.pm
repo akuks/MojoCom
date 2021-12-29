@@ -160,9 +160,21 @@ __PACKAGE__->set_primary_key("user_id");
 
 __PACKAGE__->add_unique_constraint("users_email", ["email"]);
 
+=head2 C<users_user_key>
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-12-26 22:41:04
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:72JE08MjR9Hkeh0pXfnBPw
+=over 4
+
+=item * L</user_key>
+
+=back
+
+=cut
+
+__PACKAGE__->add_unique_constraint("users_user_key", ["user_key"]);
+
+
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-12-29 11:45:32
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:PP2/u/8HPYfZoSTXWbHDPg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
