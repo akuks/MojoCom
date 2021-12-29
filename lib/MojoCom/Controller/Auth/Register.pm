@@ -22,14 +22,15 @@ sub register ( $c ) {
 
     return $c->render ( openapi => { error => 'Invalid form parameters are passed.' } ) if ( $v->has_error ) ;
 
-    if ( $c->app->dbh->resultset( 'User' )->is_user_exist( $c->param( 'username' ) ) ) {
+    if ( $c->app->dbh->resultset( 'User' )->is_user_exists( $c->param( 'username' ) ) ) {
         $output = { message => 'User registered successfully' };
         return $c->render( openapi => { error => 'User already exists.' } )
     }
 
     my %options = (
-        email    => $c->param( 'username' ),
-        password => $c->bcrypt( 'password' )
+        email      => $c->param('username'),
+        password   => $c->bcrypt('password'),
+        created_at => time()
     );
 
     my $user = $c->app->dbh->resultset( 'User' )->create_update_user( \%options );
