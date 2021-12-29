@@ -1,6 +1,7 @@
 package MojoCom;
 use Mojo::Base 'Mojolicious', -signatures;
 
+use MojoCom::Schema;
 # This method will run once at server start
 sub startup ($self) {
 
@@ -17,10 +18,12 @@ sub startup ($self) {
         url => $self->home->rel_file("api.yaml"), schema => "v3"
     });
 
-    $self->helper( dbh => $self->plugin('MojoCom::Plugin::DB') );
 
     # Register Plugin
     $self->plugin('MojoCom::Plugin::Validation');
+    $self->plugin('MojoCom::Plugin::DB');
+
+    $self->helper( dbh => sub { return $self->connect } );
 
     # Check if the form has been submitted from the browser
     # If not then return the request
