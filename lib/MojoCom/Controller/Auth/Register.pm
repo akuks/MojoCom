@@ -29,7 +29,7 @@ sub register ( $c ) {
 
     my %options = (
         email      => $c->param('username'),
-        password   => $c->bcrypt('password'),
+        password   => $c->bcrypt( $c->param( 'password' ) ),
         created_at => time()
     );
 

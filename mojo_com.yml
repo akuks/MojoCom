@@ -1,6 +1,8 @@
 ---
 secrets:
   - 9f5ad6cc8829661b224958be6b15ddc5fec10abd
+api_key:
+  - B8gmhadGJ95AtFUZMYN7Bx48JGK6aWkr3aKSFyeJ
 database:
   schema: 'MojoCom::Schema'
   production:

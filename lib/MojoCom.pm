@@ -2,6 +2,8 @@ package MojoCom;
 use Mojo::Base 'Mojolicious', -signatures;
 
 use MojoCom::Schema;
+use Mojo::JWT;
+
 # This method will run once at server start
 sub startup ($self) {
 
@@ -24,6 +26,15 @@ sub startup ($self) {
     $self->plugin('MojoCom::Plugin::DB');
 
     $self->helper( dbh => sub { return $self->connect } );
+
+    #JWT Helper
+    $self->helper( jwt_encode => sub ( $c, $payload =  {} ) {
+        return Mojo::JWT->new( claims => $payload, secret => $config->{secrets} )->encode;
+    });
+
+    $self->helper( jet_decode => sub ( $c, $jwt ) {
+        return Mojo::JWT->new( secret => $config->{secrets} )->decode($jwt);
+    });
 
     # Check if the form has been submitted from the browser
     # If not then return the request
