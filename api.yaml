@@ -76,9 +76,42 @@ paths:
             application/json:
               schema:
                 type: object
+  /profile:
+    get:
+      description: User profile for logged in user
+      summary: User profile for logged in user
+      operationId: userProfile
+      x-mojo-to: 'Auth::Login#profile'
+      parameters:
+        - in: header
+          name: token
+          schema:
+            type: string
+      responses:
+        200:
+          description: Get user profile
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+      security:
+        - bearerAuth: []
 
 components:
   schemas:
     User:
       type: object
-  
+    UserProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+        role:
+          type: integer
+  securitySchemes:
+    bearerAuth:
+      type: http
+      description: JWT Authorization
+      scheme: bearer
+      bearerFormat: JWT
+
