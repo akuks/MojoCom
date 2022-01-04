@@ -33,6 +33,11 @@ sub find_user_by_id ( $self, $user_id ) {
     return $self->find( { user_id => $user_id } );
 }
 
+# Find user by user_key
+sub find_user_by_uuid ( $self, $user_key ) {
+    return $self->find( { user_key => $user_key } );
+}
+
 sub validate_user_cred ( $self, $email, $password ) {
     my $user;
     unless ( $user = $self->is_user_exists( $email ) ) {
@@ -40,6 +45,10 @@ sub validate_user_cred ( $self, $email, $password ) {
     }
 
     return $user;
+}
+
+sub get_full_name ( $self ) {
+    return $self->first_name . ' ' . $_->last_name
 }
 
 1;
