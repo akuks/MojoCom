@@ -104,8 +104,16 @@ __PACKAGE__->table("users");
 =head2 user_key
 
   data_type: 'uuid'
+  default_value: uuid_generate_v4()
   is_nullable: 1
   size: 16
+
+=head2 user_role
+
+  data_type: 'varchar'
+  is_foreign_key: 1
+  is_nullable: 1
+  size: 255
 
 =cut
 
@@ -138,7 +146,14 @@ __PACKAGE__->add_columns(
   "updated_at",
   { data_type => "bigint", is_nullable => 1 },
   "user_key",
-  { data_type => "uuid", is_nullable => 1, size => 16 },
+  {
+    data_type => "uuid",
+    default_value => \"uuid_generate_v4()",
+    is_nullable => 1,
+    size => 16,
+  },
+  "user_role",
+  { data_type => "varchar", is_foreign_key => 1, is_nullable => 1, size => 255 },
 );
 
 =head1 PRIMARY KEY
@@ -179,9 +194,31 @@ __PACKAGE__->add_unique_constraint("users_email", ["email"]);
 
 __PACKAGE__->add_unique_constraint("users_user_key", ["user_key"]);
 
+=head1 RELATIONS
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-12-29 19:02:02
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:oTPL0Kh/cTtUx3W/HsfWdQ
+=head2 user_role
+
+Type: belongs_to
+
+Related object: L<MojoCom::Schema::Result::UserRole>
+
+=cut
+
+__PACKAGE__->belongs_to(
+  "user_role",
+  "MojoCom::Schema::Result::UserRole",
+  { role => "user_role" },
+  {
+    is_deferrable => 0,
+    join_type     => "LEFT",
+    on_delete     => "CASCADE",
+    on_update     => "CASCADE",
+  },
+);
+
+
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-01-04 21:43:30
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:lvBycfhyOVhMmiiumMoYKQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
