@@ -4,6 +4,8 @@ use Mojo::Base 'Mojolicious', -signatures;
 use MojoCom::Schema;
 use Mojo::JWT;
 
+use feature 'try';
+
 # This method will run once at server start
 sub startup ($self) {
 
@@ -29,10 +31,14 @@ sub startup ($self) {
 
     #JWT Helper
     $self->helper( jwt_encode => sub ( $c, $payload =  {} ) {
-        return Mojo::JWT->new( claims => $payload, secret => $config->{secrets} )->encode;
+        return Mojo::JWT->new(
+            claims  => $payload,
+            secret  => $config->{secrets},
+            expires => time + (3 * 30 * 3600)
+        );
     });
 
-    $self->helper( jet_decode => sub ( $c, $jwt ) {
+    $self->helper( jwt_decode => sub ( $c, $jwt ) {
         return Mojo::JWT->new( secret => $config->{secrets} )->decode($jwt);
     });
 
@@ -41,8 +47,31 @@ sub startup ($self) {
     $self->hook(
         before_dispatch => sub ( $c ) {
             my $browser = $c->req->headers->user_agent;
+
             if ( $browser =~ m/Postman|Curl/i and $self->mode ne 'development' ) {
                 return $c->render( json => { message => 'You have successfully submitted the data' } )
+            }
+
+            # JWT Verification of requests
+            if ( $c->req->url->path->to_route !~ m/login|user$/ ) {
+                my $header = $c->req->headers->header('Authorization');
+                my $uuid = $c->req->headers->header('user');
+
+                my $jwt = ( split(/ +/, $header ) )[1];
+
+                my $verification;
+
+                try {
+                    $verification = $c->app->jwt_decode( $jwt );
+                    if ( $verification->{ id } ne $uuid ) {
+                        return $c->render( openapi => json => { status => 400, error => 'Invalid Token' } )
+                    }
+                    return $verification;
+                }
+                catch ( $e ) {
+                    $c->app->log->debug( "Unable to get thing - $e" ) ;
+                    return $c->render( openapi => json => { status => 400, error => 'Invalid Token' } )
+                };
             }
         }
     );
