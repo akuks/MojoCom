@@ -26,6 +26,7 @@ sub startup ($self) {
     # Register Plugin
     $self->plugin('MojoCom::Plugin::Validation');
     $self->plugin('MojoCom::Plugin::DB');
+    $self->plugin('MojoCom::Plugin::Message');
 
     $self->helper( dbh => sub { return $self->connect } );
 
