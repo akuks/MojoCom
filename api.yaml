@@ -94,8 +94,58 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserProfile'
+        400:
+          description: Bad Request
+        401:
+          description: Not authorised
       security:
         - bearerAuth: []
+  /profile/update:
+    post:
+      description: Update user profile for logged in user
+      summary: Update user profile
+      operationId: updateUserProfile
+      x-mojo-to: 'Auth::Profile#update'
+      parameters:
+        - in: header
+          name: token
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                middle_name:
+                  type: string
+                last_name:
+                  type: string
+                url_linkedin:
+                  type: string
+                url_github:
+                  type: string
+                url_blog:
+                  type: string
+              required:
+                - first_name
+                - last_name
+      responses:
+        200:
+          description: User profile updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+        400:
+          description: Bad Request
+        401:
+          description: Not authorised
+      security:
+        - bearerAuth: [ ]
 
 components:
   schemas:
