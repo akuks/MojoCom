@@ -19,3 +19,14 @@ database:
     host: localhost
     port: 5432
     dsn: 'dbi:Pg:dbname=mojocom;host=localhost;port=5432'
+messages:
+  data_submit_succes: 'You have successfully submitted the data.'
+  email_sent_success: 'Email sent successfully.'
+  email_sent_failed: 'Failed to sent email. Please contact support.'
+  invalid_params: 'Invalid form parameters are passed.'
+  invalid_token: 'Invalid token.'
+  login_success: 'Login Successful.'
+  login_fail: 'Invalid username or password.'
+  user_create_success: 'User registered successfully.'
+  user_create_fail: 'Failed to create user. Please contact support.'
+  user_exist: 'User already exists.'
