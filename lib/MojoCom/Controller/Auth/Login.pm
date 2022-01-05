@@ -25,7 +25,7 @@ sub login( $c ) {
     );
 
     my $output = {
-        message => 'Login Successful',
+        message => $c->messages( 'login_success' ),
         token   =>  $jwt->encode,
         expires =>  $jwt->expires
     } ;
@@ -57,7 +57,7 @@ sub profile ( $c ) {
 }
 
 sub list ( $c ) {
-    my $output = { message => 'Login Successful' } ;
+    my $output = { message => $c->app->messages( 'login_success' ) } ;
     return $c->openapi->render( json => $output )
 }
 
