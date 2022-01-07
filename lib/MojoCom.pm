@@ -65,7 +65,12 @@ sub startup ($self) {
                 try {
                     $verification = $c->app->jwt_decode( $jwt );
                     if ( $verification->{ id } ne $uuid ) {
-                        return $c->render( openapi => json => { status => 400, error => 'Invalid Token' } )
+                        return $c->render( openapi => json =>
+                            {
+                                status => 400,
+                                error => $config->{ messages }->{ 'invalid_token' }
+                            }
+                        )
                     }
                     return $verification;
                 }
