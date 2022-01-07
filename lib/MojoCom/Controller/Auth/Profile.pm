@@ -10,6 +10,8 @@ sub update ( $c ) {
     my $v = $c->validation;
     my $output;
 
+    my %options;
+
     # Parameter Validation Plugin
     foreach(qw/first_name middle_name last_name url_blog url_linkedin url_github/) {
         if ( $_ =~ m/_name$/ ) {
@@ -21,29 +23,28 @@ sub update ( $c ) {
         else {
             $c->param_validation->{ $_ }->( $v );
         }
+
+        $options{ $_ } = $c->param( $_ );
     }
 
     return $c->render ( openapi => { error => $c->messages( 'invalid_params' ) } ) if ( $v->has_error ) ;
 
-    # if ( $c->app->dbh->resultset( 'User' )->is_user_exists( $c->param( 'username' ) ) ) {
-    #     return $c->render( openapi => { error => 'User already exists.' } )
-    # }
-    #
-    # my %options = (
-    #     email      => $c->param('username'),
-    #     password   => $c->bcrypt($c->param('password')),
-    #     created_at => time(),
-    #     user_role  => 'contributor'
-    # );
-    #
-    # #my $user = $c->app->dbh->resultset( 'User' )->create_update_user( \%options );
-    #
-    # if ( $user ) {
-    #     $output = { message => 'User registered successfully' };
-    # }
-    # else {
-    #     $output = { error => 'Failed to create user. Please contact support.' };
-    # }
+    $options{ updated_at } = time();
+
+    my $uuid = $c->req->headers->header('user');
+    my $user = $c->app->dbh->resultset( 'User' )->find_user_by_user_key( $uuid );
+
+    if ( $user ) {
+        eval {
+            $user->update({ %options });
+        };
+        $output = ( ! $@ ) ?
+            { message => $c->app->messages( 'user_update' ) } :
+            { error => $c->app->messages( 'user_update_fail' ) };
+    }
+    else {
+        $output = { error => $c->app->messages( 'user_update_fail' ) }
+    }
 
     return $c->render( openapi => $output );
 }
