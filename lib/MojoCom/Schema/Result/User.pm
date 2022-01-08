@@ -196,6 +196,21 @@ __PACKAGE__->add_unique_constraint("users_user_key", ["user_key"]);
 
 =head1 RELATIONS
 
+=head2 episodes
+
+Type: has_many
+
+Related object: L<MojoCom::Schema::Result::Episode>
+
+=cut
+
+__PACKAGE__->has_many(
+  "episodes",
+  "MojoCom::Schema::Result::Episode",
+  { "foreign.user" => "self.user_key" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 user_role
 
 Type: belongs_to
@@ -217,8 +232,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-01-04 21:43:30
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:lvBycfhyOVhMmiiumMoYKQ
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-01-08 22:12:30
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:vXfFoSpaJZjvcYoX/6tb3g
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
