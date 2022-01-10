@@ -41,7 +41,7 @@ __PACKAGE__->table("posts");
 
 =head2 id
 
-  data_type: 'integer'
+  data_type: 'bigint'
   is_auto_increment: 1
   is_nullable: 0
   sequence: 'posts_id_seq'
@@ -104,7 +104,7 @@ __PACKAGE__->table("posts");
 __PACKAGE__->add_columns(
   "id",
   {
-    data_type         => "integer",
+    data_type         => "bigint",
     is_auto_increment => 1,
     is_nullable       => 0,
     sequence          => "posts_id_seq",
@@ -168,6 +168,21 @@ __PACKAGE__->belongs_to(
   },
 );
 
+=head2 comments
+
+Type: has_many
+
+Related object: L<MojoCom::Schema::Result::Comment>
+
+=cut
+
+__PACKAGE__->has_many(
+  "comments",
+  "MojoCom::Schema::Result::Comment",
+  { "foreign.post_id" => "self.id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 episode
 
 Type: belongs_to
@@ -204,8 +219,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-01-10 10:31:04
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Tgf6TA0Vlw8LzRbI5frG0g
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-01-10 10:43:34
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:TwMhlvTkFhFCijKo2Pz/Dg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
