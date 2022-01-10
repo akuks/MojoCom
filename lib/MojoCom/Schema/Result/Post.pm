@@ -93,6 +93,12 @@ __PACKAGE__->table("posts");
   is_nullable: 0
   size: 8
 
+=head2 category_id
+
+  data_type: 'integer'
+  is_foreign_key: 1
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -124,6 +130,8 @@ __PACKAGE__->add_columns(
     is_nullable => 0,
     size => 8,
   },
+  "category_id",
+  { data_type => "integer", is_foreign_key => 1, is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -139,6 +147,26 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
+
+=head2 category
+
+Type: belongs_to
+
+Related object: L<MojoCom::Schema::Result::Category>
+
+=cut
+
+__PACKAGE__->belongs_to(
+  "category",
+  "MojoCom::Schema::Result::Category",
+  { id => "category_id" },
+  {
+    is_deferrable => 0,
+    join_type     => "LEFT",
+    on_delete     => "CASCADE",
+    on_update     => "CASCADE",
+  },
+);
 
 =head2 episode
 
@@ -176,8 +204,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-01-08 22:22:12
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:914EiwszPkXhwusQHvfLpg
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-01-10 10:31:04
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Tgf6TA0Vlw8LzRbI5frG0g
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
