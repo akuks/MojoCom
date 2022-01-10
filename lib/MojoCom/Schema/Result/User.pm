@@ -196,6 +196,21 @@ __PACKAGE__->add_unique_constraint("users_user_key", ["user_key"]);
 
 =head1 RELATIONS
 
+=head2 comments
+
+Type: has_many
+
+Related object: L<MojoCom::Schema::Result::Comment>
+
+=cut
+
+__PACKAGE__->has_many(
+  "comments",
+  "MojoCom::Schema::Result::Comment",
+  { "foreign.user_id" => "self.user_id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
 =head2 episodes
 
 Type: has_many
@@ -247,8 +262,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-01-08 22:22:12
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:OIM3WLY//d7vN6EH1NXaeg
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-01-10 10:43:34
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:mMooZxUwC1/6cNmlYDS33A
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
