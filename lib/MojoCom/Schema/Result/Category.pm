@@ -78,9 +78,26 @@ __PACKAGE__->add_columns(
 
 __PACKAGE__->set_primary_key("id");
 
+=head1 RELATIONS
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2021-12-29 11:45:32
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:XGRiRxP0J1l9P+sglwRcIQ
+=head2 posts
+
+Type: has_many
+
+Related object: L<MojoCom::Schema::Result::Post>
+
+=cut
+
+__PACKAGE__->has_many(
+  "posts",
+  "MojoCom::Schema::Result::Post",
+  { "foreign.category_id" => "self.id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-01-10 10:31:04
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:3x1ajdmLhf6My3vEcB84Fw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
