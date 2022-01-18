@@ -53,6 +53,10 @@ sub startup ($self) {
                 return $c->render( json => { message => 'You have successfully submitted the data' } )
             }
 
+            if ( $c->req->url->path->to_route !~ m/api/ ) {
+                return ;
+            }
+
             # JWT Verification of requests
             if ( $c->req->url->path->to_route !~ m/login|user$/ ) {
                 my $header = $c->req->headers->header('Authorization');
@@ -85,6 +89,9 @@ sub startup ($self) {
     # Workaround
     $self->hook(
         after_dispatch => sub ( $c ) {
+
+            return if ( $c->req->url->path->to_route !~ m/api/ ) ;
+
             my $response = (  $c->res ) ?  $c->res->{ content }->asset->{content} : $c->response;
             my @query = split(/<style>/, $response );
             $c->render( openapi => json => Mojo::JSON::decode_json ( $query[0] ) )
