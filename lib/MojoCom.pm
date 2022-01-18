@@ -58,7 +58,7 @@ sub startup ($self) {
             }
 
             # JWT Verification of requests
-            if ( $c->req->url->path->to_route !~ m/login|user$/ ) {
+            if ( $c->req->url->path->to_route !~ m/login|user$|article/ ) {
                 my $header = $c->req->headers->header('Authorization');
                 my $uuid = $c->req->headers->header('user');
 
