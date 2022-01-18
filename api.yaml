@@ -143,10 +143,35 @@ paths:
         400:
           description: Bad Request
         401:
-          description: Not authorised
+          description: Not authorized
       security:
         - bearerAuth: [ ]
-
+  /article:
+    post:
+      description: Create article for logged in user
+      summary: Create article for logged in user
+      operationId: createArticle
+      x-mojo-to: 'Article#create'
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                first_name: 
+                  type: string
+      responses:
+        200:
+          description: Article Created Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article'
+        400:
+          description: Bad Request
+        401:
+          description: Not authorized
 components:
   schemas:
     User:
@@ -155,6 +180,13 @@ components:
       type: object
       properties:
         id:
+          type: integer
+        article:
+          type: integer
+    Article:
+      type: object
+      properties:
+        id: 
           type: integer
         role:
           type: integer
