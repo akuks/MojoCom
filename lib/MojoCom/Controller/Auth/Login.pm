@@ -44,7 +44,7 @@ sub profile ( $c ) {
             first_name   => $_->first_name,
             middle_name  => $_->middle_name,
             last_name    => $_->last_name,
-            url_blod     => $_->url_blog,
+            url_blog     => $_->url_blog,
             url_linkedin => $_->url_linkedin,
             url_github   => $_->url_github,
             created_at   => $_->created_at,
