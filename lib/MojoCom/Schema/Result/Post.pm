@@ -89,7 +89,7 @@ __PACKAGE__->table("posts");
 =head2 status
 
   data_type: 'varchar'
-  default_value: 'active'
+  default_value: 'draft'
   is_nullable: 0
   size: 8
 
@@ -97,6 +97,16 @@ __PACKAGE__->table("posts");
 
   data_type: 'integer'
   is_foreign_key: 1
+  is_nullable: 1
+
+=head2 cover_image
+
+  data_type: 'text'
+  is_nullable: 1
+
+=head2 canonical_url
+
+  data_type: 'text'
   is_nullable: 1
 
 =cut
@@ -126,12 +136,16 @@ __PACKAGE__->add_columns(
   "status",
   {
     data_type => "varchar",
-    default_value => "active",
+    default_value => "draft",
     is_nullable => 0,
     size => 8,
   },
   "category_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 1 },
+  "cover_image",
+  { data_type => "text", is_nullable => 1 },
+  "canonical_url",
+  { data_type => "text", is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -219,8 +233,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-01-10 10:43:34
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:TwMhlvTkFhFCijKo2Pz/Dg
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-01-18 12:03:40
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:RciTvnBHl1dJEAqi5yGdkg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
