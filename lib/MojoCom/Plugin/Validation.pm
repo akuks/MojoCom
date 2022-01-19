@@ -26,6 +26,21 @@ sub register ( $c, $app, $conf ) {
             },
             url      => sub ( $v, $url ) {
                 $v->optional( $url )->like(qr/^$|^(?:(?:https?|s?))/);
+            },
+            title      => sub ( $v ) {
+                $v->required( 'title' )->like(qr/^[a-zA-Z0-9]+$/);
+            },
+            body       => sub ( $v ) {
+                $v->required( 'body' )->like(qr/./);
+            },
+            canonical_url      => sub ( $v ) {
+                $v->optional( 'canonical_url' )->like(qr/^$|^(?:(?:https?|s?))/);
+            },
+            image         => sub ( $v ) {
+                $v->optional( 'image' )->like(qr/^$|\.png$|\.jpg$|\.jpeg$|\.gif$/);
+            },
+            category      => sub ( $v ) {
+                $v->required( 'category' )->like(qr/^[0-9]$/);
             }
         }
     });
