@@ -155,12 +155,36 @@ paths:
       requestBody:
         required: true
         content:
-          application/x-www-form-urlencoded:
+          multipart/form-data:
             schema:
               type: object
               properties:
-                first_name: 
+                title: 
                   type: string
+                  description: Title of the article
+                body:
+                  type: string
+                  description: Body of the article
+                image:
+                  type: string
+                  description: Cover Image of the article
+                  format: binary
+                slug:
+                  type: string
+                  description: Slug of the article url
+                episode: 
+                  type: integer
+                  description: Episode related to the article
+                category:
+                  type: array
+                  description: Category of the Article
+                status:
+                  type: string
+                  description: Status of the Article
+              required:
+                - body 
+                - title
+                - category
       responses:
         200:
           description: Article Created Successfully
@@ -172,6 +196,9 @@ paths:
           description: Bad Request
         401:
           description: Not authorized
+        405:
+          description: Invalid input
+          content: {}
 components:
   schemas:
     User:
