@@ -32,3 +32,6 @@ messages:
   user_exist: 'User already exists.'
   user_update: 'User updated successfully.'
   user_update_fail: 'Failed to update user details. Please contact support.'
+  article_create_success: 'Article created successfully.'
+  article_create_update: 'Article updated successfully.'
+  article_create_fail: 'Failed to create article. Please contact support.'
