@@ -14,9 +14,40 @@ sub create ( $c ) {
         param_list       => @list
     )->validate_parameters;
 
-    return $app->render( openapi => { error => 'Invalid Input Parameters' } ) if $v->has_error;
+    return $app->render( openapi => { error => $c->app->messages( 'invalid_params' ) } ) if $v->has_error;
 
-    $app->render( openapi => { message => 'Article created successfully' } )
+    my $input = $v->input;
+    my %options;
+
+    foreach my $p ( keys %$input ) {
+        $options{ $p } = $input->{ $p };
+    }
+
+    $options { created_at } = time();
+    $options { user_key } = $c->req->headers->header('user');
+    $options { slug } = get_slug( lc $c->param( 'title' ) );
+    
+    my $article = $c->app->dbh->resultset('Post')->create_article( \%options );
+
+    my $output;
+
+    if ( $article ) {
+        print Data::Dumper::Dumper( $article );
+        $output->{ message } = $c->app->messages( 'article_create_success');
+        $output->{ article } = $article ;
+    }
+    else {
+        $output->{ error } = $c->app->messages( 'article_create_fail')
+    }
+
+    $app->render( openapi => $output )
+}
+
+sub get_slug ( $title ) {
+    
+    $title =~ s/ +/-/g;
+
+    return $title;
 }
 
 1;
