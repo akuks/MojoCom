@@ -28,7 +28,7 @@ sub register ( $c, $app, $conf ) {
                 $v->optional( $url )->like(qr/^$|^(?:(?:https?|s?))/);
             },
             title      => sub ( $v ) {
-                $v->required( 'title' )->like(qr/^[a-zA-Z0-9]+$/);
+                $v->required( 'title' )->like(qr/^[a-zA-Z0-9~@#$^*()_+=[\]{}|\\,.?: -]*$/);
             },
             body       => sub ( $v ) {
                 $v->required( 'body' )->like(qr/./);
