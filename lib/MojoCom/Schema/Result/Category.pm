@@ -91,13 +91,13 @@ Related object: L<MojoCom::Schema::Result::Post>
 __PACKAGE__->has_many(
   "posts",
   "MojoCom::Schema::Result::Post",
-  { "foreign.category_id" => "self.id" },
+  { "foreign.category" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-01-10 10:31:04
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:3x1ajdmLhf6My3vEcB84Fw
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-01-20 22:25:52
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:7rFDPeo/LhMAB0joUlYfiw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
