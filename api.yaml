@@ -111,6 +111,10 @@ paths:
           name: token
           schema:
             type: string
+        - in: header
+          name: user
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -152,6 +156,15 @@ paths:
       summary: Create article for logged in user
       operationId: createArticle
       x-mojo-to: 'Article#create'
+      parameters:
+        - in: header
+          name: token
+          schema:
+            type: string
+        - in: header
+          name: user
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -185,6 +198,37 @@ paths:
                 - body 
                 - title
                 - category
+      responses:
+        200:
+          description: Article Created Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article'
+        400:
+          description: Bad Request
+        401:
+          description: Not authorized
+        405:
+          description: Invalid input
+          content: {}
+      security:
+        - bearerAuth: [ ]
+  /article/{slug}:
+    get:
+      description: Show article
+      summary: Show article for any user
+      operationId: showArticle
+      x-mojo-to: 'Article#show'
+      parameters:
+        - in: header
+          name: token
+          schema:
+            type: string
+        - in: header
+          name: user
+          schema:
+            type: string
       responses:
         200:
           description: Article Created Successfully
