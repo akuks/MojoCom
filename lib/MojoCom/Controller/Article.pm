@@ -27,17 +27,16 @@ sub create ( $c ) {
     $options { user_key } = $c->req->headers->header('user');
     $options { slug } = get_slug( lc $c->param( 'title' ) );
     
-    my $article = $c->app->dbh->resultset('Post')->create_article( \%options );
+    my $article = $c->app->dbh->resultset('Post')->create_or_update_article( \%options );
 
     my $output;
 
     if ( $article ) {
-        print Data::Dumper::Dumper( $article );
         $output->{ message } = $c->app->messages( 'article_create_success');
         $output->{ article } = $article ;
     }
     else {
-        $output->{ error } = $c->app->messages( 'article_create_fail')
+        $output->{ error } = $c->app->messages( 'article_create_fail' )
     }
 
     $app->render( openapi => $output )
