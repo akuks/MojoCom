@@ -42,6 +42,36 @@ sub create ( $c ) {
     $app->render( openapi => $output )
 }
 
+sub show ( $c ) {
+    my ($slug, $id) = $c->param( 'slug' ) =~ /(.*)-(.*)/;
+
+    my $article = $c->app->dbh->resultset( 'Post' )->get_article_by_slug( $slug, $id );
+
+    return $c->render( openapi => { error => $c->app->messages( 'article_not_found' ), status => 400 } ) if ( !$article );
+
+    my @article_details = map {
+        {  
+            id    => $_->id,
+            title => $_->title,
+            slug => $_->slug,
+            body => $_->body,
+            created_at => $_->created_at,
+            updated_at => $_->updated_at,
+            user => { 
+                key => $_->user_key->user_key,
+                name => $_->user_key->first_name. ' ' . $_->user_key->last_name
+            },
+            episodes => $_->episode_id ? $_->episode_id : '',
+            status => $_->status,
+            category => $_->category,
+            image => $_->cover_image,
+            canonical_url => $_->canonical_url
+        }
+    } $article;
+
+    $c->render( openapi => $article_details[0] );
+}
+
 sub get_slug ( $title ) {
     
     $title =~ s/ +/-/g;
