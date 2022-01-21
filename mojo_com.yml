@@ -35,3 +35,4 @@ messages:
   article_create_success: 'Article created successfully.'
   article_create_update: 'Article updated successfully.'
   article_create_fail: 'Failed to create article. Please contact support.'
+  article_not_found: 'Article not found'
