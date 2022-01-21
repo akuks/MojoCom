@@ -1,10 +1,11 @@
 package MojoCom;
-use Mojo::Base 'Mojolicious', -signatures;
+use Mojo::Base 'Mojolicious', -base, -signatures;
 
 use MojoCom::Schema;
 use Mojo::JWT;
 
 use feature 'try';
+no warnings qw(experimental::signatures);
 
 # This method will run once at server start
 sub startup ($self) {
