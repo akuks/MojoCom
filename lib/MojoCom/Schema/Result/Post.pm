@@ -176,6 +176,20 @@ __PACKAGE__->set_primary_key("id");
 
 __PACKAGE__->add_unique_constraint("posts_pkey_user_key", ["id", "user_key"]);
 
+=head2 C<posts_slug_user_key>
+
+=over 4
+
+=item * L</user_key>
+
+=item * L</slug>
+
+=back
+
+=cut
+
+__PACKAGE__->add_unique_constraint("posts_slug_user_key", ["user_key", "slug"]);
+
 =head1 RELATIONS
 
 =head2 category
@@ -249,8 +263,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-01-20 22:25:52
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:aO5Z95qxhHcE1/8Sc7DJ/Q
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-01-21 23:29:59
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:hL1287BtHsRuw2skO+oIrQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
