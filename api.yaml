@@ -221,12 +221,9 @@ paths:
       operationId: showArticle
       x-mojo-to: 'Article#show'
       parameters:
-        - in: header
-          name: token
-          schema:
-            type: string
-        - in: header
-          name: user
+        - in: path
+          required: true
+          name: slug
           schema:
             type: string
       responses:
