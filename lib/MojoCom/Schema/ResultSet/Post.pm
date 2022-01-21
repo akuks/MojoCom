@@ -5,12 +5,13 @@ use base 'DBIx::Class::ResultSet';
 
 use Mojo::Base 'Mojolicious', -signatures;
 
-sub create_article ( $self, $options ) {
+sub create_or_update_article ( $self, $options ) {
     my $article;
 
     eval {
         $article = $self->create(
-            { %$options }
+            { %$options },
+            { key => 'posts_slug_user_key' }
         );
     };
     print $@;
