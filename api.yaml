@@ -214,6 +214,71 @@ paths:
           content: {}
       security:
         - bearerAuth: [ ]
+  /article/edit:
+    post:
+      description: Create article for logged in user
+      summary: Create article for logged in user
+      operationId: updateArticle
+      x-mojo-to: 'Article#edit'
+      parameters:
+        - in: header
+          name: token
+          schema:
+            type: string
+        - in: header
+          name: user
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title: 
+                  type: string
+                  description: Title of the article
+                body:
+                  type: string
+                  description: Body of the article
+                image:
+                  type: string
+                  description: Cover Image of the article
+                  format: binary
+                slug:
+                  type: string
+                  description: Slug of the article url
+                episode: 
+                  type: integer
+                  description: Episode related to the article
+                category:
+                  type: array
+                  description: Category of the Article
+                status:
+                  type: string
+                  description: Status of the Article
+              required:
+                - body 
+                - title
+                - category
+                - slug
+      responses:
+        200:
+          description: Article Created Successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article'
+        400:
+          description: Bad Request
+        401:
+          description: Not authorized
+        405:
+          description: Invalid input
+          content: {}
+      security:
+        - bearerAuth: [ ]
   /article/{slug}:
     get:
       description: Show article
