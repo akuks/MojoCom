@@ -34,7 +34,7 @@ sub create ( $c ) {
 
     if ( $article ) {
         $output->{ message } = $c->app->messages( 'article_create_success');
-        $output->{ article } = $article ;
+        $output->{ article } = get_article_details( $article ); ;
     }
     else {
         $output->{ error } = $c->app->messages( 'article_create_fail' )
@@ -51,7 +51,7 @@ sub edit ( $c ) {
         param_list       => @list
     )->validate_parameters;
 
-    return $app->render( openapi => { error => $c->app->messages( 'invalid_params' ) } ) if $v->has_error;
+    return $c->render( openapi => { error => $c->app->messages( 'invalid_params' ) } ) if $v->has_error;
 
     my $input = $v->input;
     my %options;
@@ -69,7 +69,7 @@ sub edit ( $c ) {
 
     if ( $article ) {
         $output->{ message } = $c->app->messages( 'article_update_success');
-        $output->{ article } = $article ;
+        $output->{ article } = get_article_details( $article ); ;
     }
     else {
         $output->{ error } = $c->app->messages( 'article_create_fail' )
@@ -85,6 +85,19 @@ sub show ( $c ) {
 
     return $c->render( openapi => { error => $c->app->messages( 'article_not_found' ), status => 400 } ) if ( !$article );
 
+    my @article_details = get_article_details( $article );
+
+    $c->render( openapi => $article_details[0] );
+}
+
+sub get_slug ( $title ) {
+    
+    $title =~ s/ +/-/g;
+
+    return $title;
+}
+
+sub get_article_details ( $article ) {
     my @article_details = map {
         {  
             id    => $_->id,
@@ -105,14 +118,7 @@ sub show ( $c ) {
         }
     } $article;
 
-    $c->render( openapi => $article_details[0] );
-}
-
-sub get_slug ( $title ) {
-    
-    $title =~ s/ +/-/g;
-
-    return $title;
+    return @article_details
 }
 
 1;
