@@ -45,6 +45,8 @@ sub create ( $c ) {
 
 # Updating the article
 sub edit ( $c ) {
+    $c->openapi->valid_input or return;
+    
     my $v = MojoCom::ParamValidation->new( 
         validator        => $c->validation, 
         param_validation => $c->param_validation ,
