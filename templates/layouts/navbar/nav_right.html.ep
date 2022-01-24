@@ -1,0 +1,9 @@
+<ul class="navbar-nav me-6 ms-auto">
+    <li class="nav-item me-6">
+        <a href="/create" class="nav-link text-black fs-6 btn btn-outline-danger">Create Account</a>
+    </li>
+
+    <li class="nav-item me-6">
+        <a href="/login" class="nav-link text-white fs-6 btn btn-danger">Login</a>
+    </li>
+</ul>
