@@ -23,6 +23,8 @@ sub startup ($self) {
         url => $self->home->rel_file("api.yaml"), schema => "v3"
     });
 
+    # Register Routes
+    $self->plugin('MojoCom::Plugin::Routes::Home');
 
     # Register Plugin
     $self->plugin('MojoCom::Plugin::Validation');
@@ -46,46 +48,46 @@ sub startup ($self) {
 
     # Check if the form has been submitted from the browser
     # If not then return the request
-    $self->hook(
-        before_dispatch => sub ( $c ) {
-            my $browser = $c->req->headers->user_agent;
+    # $self->hook(
+    #     before_dispatch => sub ( $c ) {
+    #         my $browser = $c->req->headers->user_agent;
 
-            if ( $browser =~ m/Postman|Curl/i and $self->mode ne 'development' ) {
-                return $c->render( json => { message => 'You have successfully submitted the data' } )
-            }
+    #         if ( $browser =~ m/Postman|Curl/i and $self->mode ne 'development' ) {
+    #             return $c->render( json => { message => 'You have successfully submitted the data' } )
+    #         }
 
-            if ( $c->req->url->path->to_route !~ m/api/ ) {
-                return ;
-            }
+    #         if ( $c->req->url->path->to_route !~ m/api/ ) {
+    #             return ;
+    #         }
 
-            # JWT Verification of requests
-            if ( $c->req->url->path->to_route !~ m/login|user$|article/ ) {
-                my $header = $c->req->headers->header('Authorization');
-                my $uuid = $c->req->headers->header('user');
+    #         # JWT Verification of requests
+    #         if ( $c->req->url->path->to_route !~ m/login|user$|article/ ) {
+    #             my $header = $c->req->headers->header('Authorization');
+    #             my $uuid = $c->req->headers->header('user');
 
-                my $jwt = ( split(/ +/, $header ) )[1];
+    #             my $jwt = ( split(/ +/, $header ) )[1];
 
-                my $verification;
+    #             my $verification;
 
-                try {
-                    $verification = $c->app->jwt_decode( $jwt );
-                    if ( $verification->{ id } ne $uuid ) {
-                        return $c->render( openapi => json =>
-                            {
-                                status => 400,
-                                error => $config->{ messages }->{ 'invalid_token' }
-                            }
-                        )
-                    }
-                    return $verification;
-                }
-                catch ( $e ) {
-                    $c->app->log->debug( "Unable to get thing - $e" ) ;
-                    return $c->render( openapi => json => { status => 400, error => 'Invalid Token' } )
-                };
-            }
-        }
-    );
+    #             try {
+    #                 $verification = $c->app->jwt_decode( $jwt );
+    #                 if ( $verification->{ id } ne $uuid ) {
+    #                     return $c->render( openapi => json =>
+    #                         {
+    #                             status => 400,
+    #                             error => $config->{ messages }->{ 'invalid_token' }
+    #                         }
+    #                     )
+    #                 }
+    #                 return $verification;
+    #             }
+    #             catch ( $e ) {
+    #                 $c->app->log->debug( "Unable to get thing - $e" ) ;
+    #                 return $c->render( openapi => json => { status => 400, error => 'Invalid Token' } )
+    #             };
+    #         }
+    #     }
+    # );
 
     # Workaround
     $self->hook(
