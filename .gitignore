@@ -7,3 +7,4 @@ app/
 cpanfile.snapshot
 templates/example
 app/node_modules/
+public/css/.DS_Store
