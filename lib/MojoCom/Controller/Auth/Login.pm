@@ -5,6 +5,11 @@ use strict;
 use warnings;
 use JSON;
 
+sub index ( $c ) {
+    $c->render( template => 'auth/login' );
+}
+
+# This is for REST API. It may be deleted
 sub login( $c ) {
     my $app = $c->openapi->valid_input or return;
 
