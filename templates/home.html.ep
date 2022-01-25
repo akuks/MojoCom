@@ -1,4 +1,20 @@
 % layout 'default';
 % title 'Home Page for MojoCom';
 
-<!-- %= include 'layouts/navbar/vertical/nav_vertical_left'; -->
+<div class="">
+    <div class="d-flex gap-6">
+        <div class="col-3 bg-light border">
+            %= include 'layouts/navbar/vertical/nav_vertical_left';
+        </div>
+
+        <div class="col-6 bg-light border">
+          %= include 'article';
+        </div>
+        
+        <div class="col bg-light border">
+          Right Vertical
+        </div>
+      </div>
+    
+</div>
+
