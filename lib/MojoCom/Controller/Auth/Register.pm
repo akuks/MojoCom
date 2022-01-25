@@ -4,6 +4,11 @@ use Mojo::Base 'Mojolicious::Controller', -signatures;
 use warnings;
 use strict;
 
+sub index ( $c ) {
+    $c->render( template => 'auth/register' );
+}
+
+# This is for the API.
 sub register ( $c ) {
     my $app = $c->openapi->valid_input or return;
 
