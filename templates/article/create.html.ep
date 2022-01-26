@@ -4,15 +4,8 @@
 <section class="position-relative">
     <div class="">
         <div class="max-w-md mx-auto p-6 px-lg-10 py-lg-12 bg-white text-center border rounded">
-            %= form_for '/upload/image', method => 'POST' => (enctype => 'multipart/form-data') => begin
-
-                %= text_field 'filename', id => 'upload_file', placeholder => 'File Name', disabled => 'disabled'
-            
-                <div class="fileUpload btn btn-secondary rounded">
-                    <span>Add Cover Image</span>
-                    %= file_field 'cover_image', id => 'cover_image', class => 'upload rounded form-control btn custom-file-input'
-                </div>
-
+            %= form_for '#', method => 'POST' => (enctype => 'multipart/form-data') => begin
+                %= csrf_field
                 <div class="position-relative mb-6">
                     <div id="editorjs" class=""></div>
                 </div>
