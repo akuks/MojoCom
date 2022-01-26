@@ -26,6 +26,8 @@ sub startup ($self) {
     # Register Routes
     $self->plugin('MojoCom::Plugin::Routes::Home');
     $self->plugin('MojoCom::Plugin::Routes::Auth');
+    $self->plugin('MojoCom::Plugin::Routes::Article');
+    $self->plugin('MojoCom::Plugin::Routes::Upload');
 
     # Register Plugin
     $self->plugin('MojoCom::Plugin::Validation');
