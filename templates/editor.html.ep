@@ -65,6 +65,9 @@
              image: {
                 class: ImageTool,
                 config: {
+                        additionalRequestHeaders: {
+                        "X-CSRF-TOKEN": '<%= csrf_token %>'
+                    },
                     endpoints: {
                         byFile: 'http://localhost.0x484c.com:3000/upload/image'
                     }
