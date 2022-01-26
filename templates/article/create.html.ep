@@ -1,0 +1,58 @@
+% layout 'default';
+% title 'Create Article on MojoCom';
+
+<section class="position-relative">
+    <div class="">
+        <div class="max-w-md mx-auto p-6 px-lg-10 py-lg-12 bg-white text-center border rounded">
+            %= form_for '/upload/image', method => 'POST' => (enctype => 'multipart/form-data') => begin
+
+                %= text_field 'filename', id => 'upload_file', placeholder => 'File Name', disabled => 'disabled'
+            
+                <div class="fileUpload btn btn-secondary rounded">
+                    <span>Add Cover Image</span>
+                    %= file_field 'cover_image', id => 'cover_image', class => 'upload rounded form-control btn custom-file-input'
+                </div>
+
+                <div class="position-relative mb-6">
+                    <div id="editorjs" class=""></div>
+                </div>
+
+                %= submit_button 'Publish', id => 'publish', class => 'btn btn-primary rounded', style => 'margin-right: 10px'
+
+                %= submit_button 'Save Draft', id => 'draft', class => 'btn btn-secondary rounded'
+            %= end
+        </div>
+    </div>
+</section>
+
+%= include 'editor';
+
+<style type="text/css">
+    .fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+</style>
+
+<script>
+    document.getElementById("cover_image").onchange = function () {
+        document.getElementById("upload_file").value = this.value;
+    };
+
+    function preview() {
+        frame.src = URL.createObjectURL(event.target.files[0]);
+    }
+
+</script>
