@@ -2,6 +2,13 @@ package MojoCom::Controller::Article;
 use Mojo::Base 'Mojolicious::Controller', -signatures;
 use MojoCom::ParamValidation;
 
+sub create_form ( $c ) {
+    $c->render( template => 'article/create' );
+}
+
+
+
+
 # Required Parameters
 my @list = ['title', 'body', 'category']; 
 
