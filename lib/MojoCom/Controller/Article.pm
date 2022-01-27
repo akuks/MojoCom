@@ -6,7 +6,9 @@ sub create_form ( $c ) {
     $c->render( template => 'article/create' );
 }
 
-
+sub create_post ( $c ) {
+    $c->render( json => { message => 'Article Saved', status => 200 } );
+}
 
 
 # Required Parameters
