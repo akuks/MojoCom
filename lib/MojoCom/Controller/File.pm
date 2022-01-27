@@ -12,7 +12,7 @@ sub image_post ( $c ) {
 
     # Check for Valid Image Extension
     return $c->render( json => { error => 'Invalid image extension.' } )  
-        if ( $c->param('image')->filename !~ /\.png$|\.jpg$|\.jpeg$/ ) ;
+        if ( $c->param('image')->filename !~ /\.png$|\.jpg$|\.jpeg$|\.gif$/ ) ;
 
     my $image = $c->req->upload( 'image' );
     my $image_file = './public/image/articles/' . $c->param( 'image' )->filename;
