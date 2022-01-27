@@ -13,7 +13,7 @@ sub register ( $c, $app, $conf ) {
     # $ac_get->get( '/:id' )->to('Article#show');
     
     # # Create 
-    # $ac_post->('/create')->to('Article#create_post');
+    $ac_post->post('/create')->to('Article#create_post');
     # $ac_post->('/:id/update')->to('Article#update_post');
 
     return
