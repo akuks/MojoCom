@@ -3,49 +3,47 @@
 
 <section class="position-relative">
     <div class="">
+        
         <div class="max-w-md mx-auto p-6 px-lg-10 py-lg-12 bg-white text-center border rounded">
-            %= form_for '#', method => 'POST' => (enctype => 'multipart/form-data') => begin
+            %= form_for '/article/create', id=> 'create_article', method => 'POST' => begin
                 %= csrf_field
                 <div class="position-relative mb-6">
                     <div id="editorjs" class=""></div>
                 </div>
 
-                %= submit_button 'Publish', id => 'publish', class => 'btn btn-primary rounded', style => 'margin-right: 10px'
+                %= submit_button 'Publish', id => 'publish', class => 'btn btn-primary rounded', style => 'margin-right: 10px', onclick => 'saveArticle(); return false;'
 
-                %= submit_button 'Save Draft', id => 'draft', class => 'btn btn-secondary rounded'
+                %= submit_button 'Save Draft', id => 'draft', class => 'btn btn-secondary rounded', onclick => 'saveArticle()'
             %= end
         </div>
     </div>
 </section>
 
 %= include 'editor';
-
-<style type="text/css">
-    .fileUpload {
-    position: relative;
-    overflow: hidden;
-    margin: 10px;
-}
-.fileUpload input.upload {
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: 0;
-    padding: 0;
-    font-size: 20px;
-    cursor: pointer;
-    opacity: 0;
-    filter: alpha(opacity=0);
-}
-</style>
+%= javascript '/js/MojoComEditorConfig.js'
 
 <script>
-    document.getElementById("cover_image").onchange = function () {
-        document.getElementById("upload_file").value = this.value;
-    };
+    const editor = new MojoComEditorConfig('editorjs', '<%= csrf_token %>');
+    let editorData = editor.editorConfig;
 
-    function preview() {
-        frame.src = URL.createObjectURL(event.target.files[0]);
+    async function saveArticle( status ) {
+        let form = getAppElementById( 'create_article' );
+
+        let editorDataToSend = editorData.save().then((outputData) => {
+            return outputData;
+        }).catch((error) => {
+            console.log('Saving failed: ', error)
+        });
+
+        // disable button
+        disableButton( 'publish' );
+        disableButton( 'draft' );
+        
+        let response = await appAjax( form );
+        
+        if ( response.status == 200 ) {
+            enableButton('publish');
+            enableButton('draft');
+        }
     }
-
 </script>
