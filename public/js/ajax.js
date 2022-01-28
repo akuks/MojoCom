@@ -2,12 +2,7 @@
 This library is to submit the Ajax request And other common functionalities.
 We are avoiding Jquery for slimmer builds
 */
-async function appAjax(form) {
-    let formData = new FormData();
-    
-    for ( let i = 0; i < form.length; i++ ) {
-        formData.append(form[i].name, form[i].value);
-    }
+async function appAjax(form, formData) {
     
     let url = form.getAttribute('action');
     let method = form.getAttribute('method');
