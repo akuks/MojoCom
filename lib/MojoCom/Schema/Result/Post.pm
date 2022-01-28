@@ -46,12 +46,6 @@ __PACKAGE__->table("posts");
   is_nullable: 0
   sequence: 'posts_id_seq'
 
-=head2 title
-
-  data_type: 'varchar'
-  is_nullable: 0
-  size: 100
-
 =head2 body
 
   data_type: 'text'
@@ -119,8 +113,6 @@ __PACKAGE__->add_columns(
     is_nullable       => 0,
     sequence          => "posts_id_seq",
   },
-  "title",
-  { data_type => "varchar", is_nullable => 0, size => 100 },
   "body",
   { data_type => "text", is_nullable => 0 },
   "slug",
@@ -263,8 +255,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-01-21 23:29:59
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:hL1287BtHsRuw2skO+oIrQ
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2022-01-27 21:40:24
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Cm1r7DFES9v6RzSyi4di1Q
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
