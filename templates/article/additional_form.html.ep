@@ -1,0 +1,21 @@
+<!-- Additional Menu Items -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+aria-labelledby="offcanvasRightLabel">
+<div class="offcanvas-header">
+    <h5 id="offcanvasRightLabel">Article Settings</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+        aria-label="Close"></button>
+</div>
+<div class="offcanvas-body">
+    <div class="position-relative mb-6">
+        %= text_field 'slug', id => 'slug', class => 'form-control rounded', placeholder => '/your-article-slug'
+        <span class="position-absolute start-0 top-0 ms-3 mt-n2 px-1 bg-white text-muted small">Slug</span>
+    </div>
+
+    <div class="position-relative mb-6">
+        %= text_field 'tags', id => 'tags', class => 'form-control rounded', placeholder => 'Select Tags'
+        <span class="position-absolute start-0 top-0 ms-3 mt-n2 px-1 bg-white text-muted small">Article Category</span>
+    </div>
+    
+</div>
+</div>
