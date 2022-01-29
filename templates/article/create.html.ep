@@ -1,22 +1,39 @@
 % layout 'default';
 % title 'Create Article on MojoCom';
 
-<section class="position-relative">
-    <div class="">
-        
+%= javascript 'https://unpkg.com/@yaireo/tagify';
+%= javascript 'https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js';
+
+<section class="position-relative d-flex align-items-stretch">
+    <div class="flex-grow-1">
+
         <div class="max-w-md mx-auto p-6 px-lg-10 py-lg-12 bg-white text-center border rounded">
             %= form_for '/article/create', id=> 'create_article', method => 'POST' => begin
-                %= csrf_field
-                <div class="position-relative mb-6">
-                    <div id="editorjs" class=""></div>
-                </div>
+            %= csrf_field
+            <div class="position-relative mb-6">
+                <div id="editorjs" class=""></div>
+            </div>
+            <input name="category" value='6' type="hidden">
 
-                %= submit_button 'Publish', id => 'publish', class => 'btn btn-primary rounded', style => 'margin-right: 10px', onclick => 'saveArticle(); return false;'
+            <!-- Additional Menu Items -->
+            %= include 'article/additional_form';
 
-                %= submit_button 'Save Draft', id => 'draft', class => 'btn btn-secondary rounded', onclick => 'saveArticle()'
+            %= submit_button 'Publish', id => 'publish', class => 'btn btn-primary rounded', style => 'margin-right: 10px', onclick => 'saveArticle(this.id); return false;'
+
+            %= submit_button 'Save Draft', id => 'draft', class => 'btn btn-secondary rounded', onclick => 'saveArticle(this.id)'
+
             %= end
         </div>
     </div>
+    <div>
+        <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+        aria-controls="offcanvasRight">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+            </svg>
+        </button>
+    </div>
+    
 </section>
 
 %= include 'editor';
@@ -26,24 +43,38 @@
     const editor = new MojoComEditorConfig('editorjs', '<%= csrf_token %>');
     let editorData = editor.editorConfig;
 
-    async function saveArticle( status ) {
-        let form = getAppElementById( 'create_article' );
-
-        let editorDataToSend = editorData.save().then((outputData) => {
+    async function saveArticle(status) {
+        let editorDataToSend = await editorData.save().then((outputData) => {
             return outputData;
         }).catch((error) => {
             console.log('Saving failed: ', error)
+            return 0
         });
 
+        let form = getAppElementById('create_article');
+
+        let formData = new FormData();
+
+        for (let i = 0; i < form.length; i++) {
+            formData.append(form[i].name, form[i].value);
+            if (i === (form.length - 1)) {
+                formData.append('body', JSON.stringify(editorDataToSend));
+                formData.append('status', status);
+            }
+        }
+
         // disable button
-        disableButton( 'publish' );
-        disableButton( 'draft' );
-        
-        let response = await appAjax( form );
-        
-        if ( response.status == 200 ) {
+        disableButton('publish');
+        disableButton('draft');
+
+        let response = await appAjax(form, formData);
+
+        if (response.status == 200) {
             enableButton('publish');
             enableButton('draft');
         }
     }
 </script>
+
+%= javascript '/js/categoryTags.js' ;
+%= stylesheet '/css/tagifySelect.css', title => 'Tagify Multiselect style'

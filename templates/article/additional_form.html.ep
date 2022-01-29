@@ -13,8 +13,8 @@ aria-labelledby="offcanvasRightLabel">
     </div>
 
     <div class="position-relative mb-6">
-        %= text_field 'tags', id => 'tags', class => 'form-control rounded', placeholder => 'Select Tags'
-        <span class="position-absolute start-0 top-0 ms-3 mt-n2 px-1 bg-white text-muted small">Article Category</span>
+        %= text_field 'tags', id => 'tags', class => 'form-control rounded'
+        <span class="position-absolute start-0 top-0 ms-3 mt-n2 px-1 bg-white text-muted small">Select Categories</span>
     </div>
     
 </div>
