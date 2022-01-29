@@ -2,17 +2,49 @@ package MojoCom::Controller::Article;
 use Mojo::Base 'Mojolicious::Controller', -signatures;
 use MojoCom::ParamValidation;
 
+use Mojo::JSON;
+
+# Required Parameters for Creating an article
+my @list = ['title', 'body', 'category']; 
+
 sub create_form ( $c ) {
     $c->render( template => 'article/create' );
 }
 
+# Create the Article
 sub create_post ( $c ) {
-    $c->render( json => { message => 'Article Saved', status => 200 } );
+    my $v = $c->validation;
+    return $c->render( text => 'Invalid CSRF token!', status => 403)
+        if $v->csrf_protect->has_error( 'csrf_token' );
+
+    # my $v = MojoCom::ParamValidation->new( 
+    #     validator        => $c->validation, 
+    #     param_validation => $c->param_validation ,
+    #     param_list       => @list
+    # )->validate_parameters;
+
+    # return $c->render( openapi => { error => $c->app->messages( 'invalid_params' ) } ) if $v->has_error;
+
+    my %options;
+    my $input = $v->input;
+    my %options;
+
+    foreach my $p ( keys %$input ) {
+        next if !$p;
+        $options{ $p } = $input->{ $p };
+    }
+
+    if ( ! exists $options{category} ) {
+        $options{category} = $c->app->dbh->resultset( 'Category' )->get_category_by_name( 'others' );
+    }
+    
+    print Data::Dumper::Dumper(  Mojo::JSON::decode_json( $c->param( 'body' ) ) );
+
+    $c->render( json => { 
+        message => 'Article Saved', status => 200 ,
+        editor  => Mojo::JSON::decode_json( $c->param( 'body' ) ),
+    } );
 }
-
-
-# Required Parameters
-my @list = ['title', 'body', 'category']; 
 
 # This action will render a template
 sub create ( $c ) {
