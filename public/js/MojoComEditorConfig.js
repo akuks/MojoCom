@@ -10,6 +10,11 @@ class MojoComEditorConfig {
     get editorConfig() {
         return new EditorJS({
             /**
+            * Set autofocus to True
+            */
+            autofocus: true,
+
+            /**
             * Enable/Disable the read only mode
             */
             readOnly: false,
@@ -109,6 +114,11 @@ class MojoComEditorConfig {
                     shortcut: 'CMD+ALT+T'
                 },
 
+                paragraph: {
+                    class: Paragraph,
+                    inlineToolbar: true,
+                },
+
             },
 
             /**
@@ -121,6 +131,12 @@ class MojoComEditorConfig {
                         data: {
                             text: "Post Title...",
                             level: 2
+                        }
+                    },
+                    {
+                        type: "paragraph",
+                        data: {
+                            text: "Write your content here..."
                         }
                     }
                 ]
