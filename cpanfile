@@ -19,3 +19,4 @@ requires 'Mojolicious::Plugin::AutoReload';
 requires 'JSON::Validator';
 requires 'Config::General';
 requires 'DBD::Pg';
+requires 'IO::Socket::SSL';
