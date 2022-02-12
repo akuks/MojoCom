@@ -1,2 +1,2 @@
-<a class="btn me-2" href="#">Sign In</a>
-<a class="btn btn-secondary" href="#">Create Account</a>
+<a class="btn me-2" href="/login">Sign In</a>
+<a class="btn btn-secondary rounded" href="/signup">Create Account</a>
