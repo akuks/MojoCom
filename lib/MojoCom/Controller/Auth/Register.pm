@@ -1,11 +1,30 @@
 package MojoCom::Controller::Auth::Register;
 use Mojo::Base 'Mojolicious::Controller', -signatures;
+use MojoCom::ParamValidation;
 
 use warnings;
 use strict;
 
 sub index ( $c ) {
     $c->render( template => 'auth/register' );
+}
+
+sub register_post ( $c ) {
+    my $v = $c->validation;
+    return $c->render( text => 'Invalid CSRF token!', status => 403)
+        if $v->csrf_protect->has_error( 'csrf_token' );
+
+    my @list = ['username', 'password', 'confirm_password']; 
+
+    my $v = MojoCom::ParamValidation->new( 
+        validator        => $c->validation, 
+        param_validation => $c->param_validation ,
+        param_list       => @list
+    )->validate_parameters;
+
+    return $c->render( json => { error => $c->app->messages( 'invalid_params' ) } ) if $v->has_error;
+
+    $c->render ( json => { message => 'User registerd succesfully.' } );
 }
 
 # This is for the API.
@@ -49,5 +68,7 @@ sub register ( $c ) {
 
     return $c->render( openapi => $output );
 }
+
+
 
 1;
