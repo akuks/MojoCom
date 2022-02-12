@@ -7,6 +7,8 @@ sub register ( $c, $app, $conf ) {
     $r->get( '/login' )->to('Auth::Login#index');
     $r->get( '/signup' )->to('Auth::Register#index');
 
+    $r->post( '/signup' )->to( 'Auth::Register#register_post' );
+
     return
 } 
 
